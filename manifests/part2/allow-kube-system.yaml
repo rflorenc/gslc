@@ -1,0 +1,14 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-kube-system
+  namespace: private
+spec:
+  podSelector:
+    matchLabels:
+      app: private-service
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          purpose: kube-system

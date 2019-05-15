@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gslc-ping
+  namespace: monitoring
+  labels:
+    app: gslc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gslc
+  template:
+    metadata:
+      labels:
+        app: gslc
+    spec:
+      containers:
+      - name: gslc-pinger
+        image: ${IMAGE_NAME}:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        securityContext:
+          allowPrivilegeEscalation: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    prometheus.io/scrape: 'true'
+  name: gslc
+  namespace: monitoring
+  labels:
+    app: gslc
+spec:
+  ports:
+  - name: gslc
+    port: 8080
+    protocol: TCP
+  selector:
+    app: gslc
