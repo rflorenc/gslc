@@ -17,3 +17,6 @@ kubectl create clusterrolebinding default-view --clusterrole=view --serviceaccou
 kubectl run --rm -i ${container_name} --image=${tagged_build_name} --image-pull-policy=Never
 
 
+#kubectl run --rm -i ${container_name} --image=${tagged_build_name} –image-pull-policy=Never --generator=run-pod/v1 -n gslc -v=5
+
+
